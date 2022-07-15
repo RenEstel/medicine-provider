@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 00.000.00/ddl/schema
+      author: RenEstel
+      changes:
+        - tagDatabase:
+            tag: release/00.000.00
+
+        - sql:
+            sql: create schema if not exists medicine
+            endDelimiter: ;
+
+        - rollback:
+            sql: drop schema if exists medicine cascade
+            endDelimiter: ;

@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 00.000.01/ddl/users_analyzes
+      author: RenEstel
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                schemaName: medicine
+                tableName: users_analyzes
+      changes:
+        - tagDatabase:
+            tag: release/00.000.01
+
+        - createSequence:
+            schemaName: medicine
+            sequenceName: users_analyzes_seq
+            startValue: 1
+
+        - createTable:
+            schemaName: medicine
+            tableName: users_analyzes
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_analyzes_pk
+                  name: id
+                  type: bigint
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_users_analyzes_users
+                    references: medicine.analyzes(id)
+              - column:
+                  name: metric_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_users_analyzes_analyzes
+                    references: medicine.analyzes(id)
+
+        - addDefaultValue:
+            schemaName: medicine
+            tableName: users_analyzes
+            columnName: id
+            defaultValueSequenceNext: users_analyzes_seq

@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - include:
+      file: ddl/schema.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: ddl/users.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: ddl/metrics.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: ddl/analyzes.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: ddl/analyze_score.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: ddl/users_analyzes.yaml
+      relativeToChangelogFile: true

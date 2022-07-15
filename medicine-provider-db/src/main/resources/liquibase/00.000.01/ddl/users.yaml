@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 00.000.01/ddl/users
+      author: RenEstel
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                schemaName: medicine
+                tableName: users
+      changes:
+        - tagDatabase:
+            tag: release/00.000.01
+
+        - createSequence:
+            schemaName: medicine
+            sequenceName: users_seq
+            startValue: 1
+
+        - createTable:
+            schemaName: medicine
+            tableName: users
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_pk
+                  name: id
+                  type: bigint
+              - column:
+                  name: name
+                  type: varchar(132)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: login
+                  type: varchar(32)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: password
+                  type: varchar(32)
+                  constraints:
+                    - nullable: false
+
+        - addDefaultValue:
+            schemaName: medicine
+            tableName: users
+            columnName: id
+            defaultValueSequenceNext: users_seq

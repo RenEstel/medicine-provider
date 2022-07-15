@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 00.000.01/ddl/analyze_score
+      author: RenEstel
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                schemaName: medicine
+                tableName: analyze_score
+      changes:
+        - tagDatabase:
+            tag: release/00.000.01
+
+        - createSequence:
+            schemaName: medicine
+            sequenceName: analyze_score_seq
+            startValue: 1
+
+        - createTable:
+            schemaName: medicine
+            tableName: analyze_score
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: analyze_score_pk
+                  name: id
+                  type: bigint
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_analyze_score_users
+                    references: medicine.users(id)
+              - column:
+                  name: metric_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_analyze_score_metrics
+                    references: medicine.metrics(id)
+              - column:
+                  name: score_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: int
+                  constraints:
+                    nullable: false
+
+
+
+
+        - addDefaultValue:
+            schemaName: medicine
+            tableName: analyze_score
+            columnName: id
+            defaultValueSequenceNext: analyze_score_seq

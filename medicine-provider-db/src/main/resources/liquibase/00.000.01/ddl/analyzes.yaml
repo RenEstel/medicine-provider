@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 00.000.01/ddl/analyzes
+      author: RenEstel
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                schemaName: medicine
+                tableName: analyzes
+      changes:
+        - tagDatabase:
+            tag: release/00.000.01
+
+        - createSequence:
+            schemaName: medicine
+            sequenceName: analyzes_seq
+            startValue: 1
+
+        - createTable:
+            schemaName: medicine
+            tableName: analyzes
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: analyzes_pk
+                  name: id
+                  type: bigint
+              - column:
+                  name: name
+                  type: varchar(132)
+                  constraints:
+                    - nullable: false
+
+        - addDefaultValue:
+            schemaName: medicine
+            tableName: analyzes
+            columnName: id
+            defaultValueSequenceNext: analyzes_seq

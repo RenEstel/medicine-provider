@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 00.000.01/ddl/metrics
+      author: RenEstel
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                schemaName: medicine
+                tableName: metrics
+      changes:
+        - tagDatabase:
+            tag: release/00.000.01
+
+        - createSequence:
+            schemaName: medicine
+            sequenceName: metrics_seq
+            startValue: 1
+
+        - createTable:
+            schemaName: medicine
+            tableName: metrics
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: metrics_pk
+                  name: id
+                  type: bigint
+              - column:
+                  name: name
+                  type: varchar(132)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: measure
+                  type: varchar(10)
+                  constraints:
+                    - nullable: false
+
+        - addDefaultValue:
+            schemaName: medicine
+            tableName: metrics
+            columnName: id
+            defaultValueSequenceNext: metrics_seq
