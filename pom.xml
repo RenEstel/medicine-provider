@@ -17,6 +17,7 @@
     <modules>
         <module>medicine-provider-app</module>
         <module>medicine-provider-db</module>
+        <module>medicine-provider-persistence</module>
     </modules>
     <properties>
         <medicine.provider.version>00.000.01-SNAPSHOT</medicine.provider.version>
@@ -34,13 +35,14 @@
                 <artifactId>postgresql</artifactId>
                 <version>42.4.0</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-        <!--		</dependency>-->
+
         <!--		<dependency>-->
         <!--			<groupId>org.springframework.boot</groupId>-->
         <!--			<artifactId>spring-boot-starter-web</artifactId>-->
@@ -74,18 +76,6 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
